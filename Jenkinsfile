@@ -3,25 +3,25 @@ pipeline{
 	stages{
 		stage("Pull Latest Image"){
 			steps{
-				sh "docker pull 8049376624/selenium-docker"
+				bat "docker pull 8049376624/selenium-docker"
 			}
 		}
 		stage("Start Grid"){
 			steps{
-				sh "docker-compose up -d hub chrome firefox"
+				bat "docker-compose up -d hub chrome firefox"
 			}
 		}
 		stage("Run Test"){
 			steps{
-				sh "docker-compose up search-module"
+				bat "docker-compose up search-module"
 			}
 		}
 	}
 	post{
 		always{
 			archiveArtifacts artifacts: 'output/**'
-			sh "docker-compose down"
-			sh "sudo rm -rf output/"
+			bat "docker-compose down"
+			bat "sudo rm -rf output/"
 		}
 	}
 }
